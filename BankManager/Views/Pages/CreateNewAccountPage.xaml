@@ -1,0 +1,85 @@
+﻿<!-- Dipayan Sarker, February 10, 2020 -->
+<Page x:Class="BankManager.Views.Pages.CreateNewAccountPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800" x:Name="mainPage"
+      Height="{StaticResource PageHeight}" Width="{StaticResource PageWidth}" 
+      Title="CreateNewAccountPage" Background="{StaticResource PageBackground}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="7*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <TextBlock Text="Create New Account" Style="{Binding Source={StaticResource PageTitleStyle}}"/>
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="8*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Margin="5">
+                <TextBlock Text="Account No." Style="{Binding Source={StaticResource PageLabelStyle}}"/>
+                <TextBlock Text="First Name" Style="{Binding Source={StaticResource PageLabelStyle}}"/>
+                <TextBlock Text="Last Name" Style="{Binding Source={StaticResource PageLabelStyle}}"/>
+                <TextBlock Text="Address" Style="{Binding Source={StaticResource PageLabelStyle}}"/>
+                <TextBlock Text="Date of Birth" Style="{Binding Source={StaticResource PageLabelStyle}}"/>
+                <TextBlock Text="Personal No." Style="{Binding Source={StaticResource PageLabelStyle}}"/>
+                <TextBlock Text="Place of Birth" Style="{Binding Source={StaticResource PageLabelStyle}}"/>
+                <TextBlock Text="Citizenship" Style="{Binding Source={StaticResource PageLabelStyle}}"/>
+                <TextBlock Text="Sex" Margin="3 3 0 10" Style="{Binding Source={StaticResource PageLabelStyle}}"/>
+                <TextBlock Text="Civil Status" Margin="3 3 0 10" Style="{Binding Source={StaticResource PageLabelStyle}}"/>
+                <TextBlock Text="Phone No." Margin="3 3 0 10" Style="{Binding Source={StaticResource PageLabelStyle}}"/>
+                <TextBlock Text="Email" Margin="3 3 0 10" Style="{Binding Source={StaticResource PageLabelStyle}}"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Margin="5">
+                <TextBox Text="{Binding AccountNumberString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxLength="8" IsReadOnly="True" Background="#E7E7E7" Style="{Binding Source={StaticResource PageTextBoxStyle}}"/>
+                <TextBox Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxLength="40" Style="{Binding Source={StaticResource PageTextBoxStyle}}"/>
+                <TextBox Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxLength="25" Style="{Binding Source={StaticResource PageTextBoxStyle}}"/>
+                <TextBox Text="{Binding Address, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxLength="200" Style="{Binding Source={StaticResource PageTextBoxStyle}}"/>
+                <DatePicker x:Name="datePickerDOB" SelectedDate="{Binding DoBPicker}" Width="300" HorizontalAlignment="Left" Margin="80 0 0 10"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Text="{Binding ElementName=datePickerDOB, Path=SelectedDate, Converter={StaticResource dateTimeToStringConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                             IsReadOnly="True" Width="230" Background="#E7E7E7"
+                             Style="{Binding Source={StaticResource PageTextBoxStyle}}"/>
+                    <TextBlock Text="-" Style="{Binding Source={StaticResource PageLabelStyle}}"/>
+                    <TextBox Text="{Binding PersonNomberSecret, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                             Width="56" HorizontalAlignment="Left" Margin="5 0 0 10" MaxLength="4" 
+                             Style="{Binding Source={StaticResource PageTextBoxStyle}}"/>
+                </StackPanel>
+                <TextBox Text="{Binding PlaceOfBirth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                         MaxLength="40" Style="{Binding Source={StaticResource PageTextBoxStyle}}"/> 
+                <ComboBox ItemsSource="{Binding AllCountryList}" 
+                          SelectedItem="{Binding Citizenship, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                          SelectedIndex="{Binding SelectedIndexAllCountryCombobox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          Style="{Binding Source={StaticResource PageComboBoxStyle}}"/>
+                <ComboBox Style="{Binding Source={StaticResource PageComboBoxStyle}}"
+                          SelectedItem="{Binding Sex, Converter={StaticResource stringToComBoxSelectedItemConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          SelectedIndex="{Binding SelectedIndexSex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <ComboBoxItem Content="Male"/>
+                    <ComboBoxItem Content="Female"/>
+                    <ComboBoxItem Content="Other"/>
+                </ComboBox>
+                <ComboBox Style="{Binding Source={StaticResource PageComboBoxStyle}}"
+                          SelectedItem="{Binding CivilStatus, Converter={StaticResource stringToComBoxSelectedItemConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          SelectedIndex="{Binding SelectedIndexCivilStatus, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <ComboBoxItem Content="Single"/>
+                    <ComboBoxItem Content="Maried"/>
+                </ComboBox>
+                <TextBox Text="{Binding PhoneNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                         MaxLength="15" Style="{Binding Source={StaticResource PageTextBoxStyle}}"/>
+                <TextBox Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                         MaxLength="60" Style="{Binding Source={StaticResource PageTextBoxStyle}}"/>
+            </StackPanel>
+        </Grid>
+        <StackPanel Grid.Row="2" Style="{Binding Source={StaticResource PageBottomStackPanelStyle}}">
+            <Button Command="{Binding CreateCommand}" CommandParameter="{Binding ElementName=mainPage}" Content="Create" Style="{Binding Source={StaticResource PageButtonStyle}}"/>
+            <Button Command="{Binding CancelCommand}" CommandParameter="{Binding ElementName=mainPage}" Content="Cancel" Style="{Binding Source={StaticResource PageButtonStyle}}"/>
+        </StackPanel>
+    </Grid>
+</Page>

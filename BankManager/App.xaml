@@ -1,0 +1,139 @@
+﻿<!-- Dipayan Sarker, February 10, 2020 -->
+<Application x:Class="BankManager.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="clr-namespace:BankManager.Converters"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             StartupUri="Views/LoginWindow.xaml">
+    
+    <Application.Resources>
+
+        <ResourceDictionary>
+            <converters:Int32ToStringConverter x:Key="int32ToStringConverter"/>
+
+            <converters:DecimalToStringConverter x:Key="decimalToStringConverter"/>
+
+            <converters:Int32ToStringNormalConverter x:Key="int32ToStringNormalConverter"/>
+
+            <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
+
+            <converters:DateTimeToStringConverter x:Key="dateTimeToStringConverter"/>
+
+            <converters:StringToComBoxSelectedItemConverter x:Key="stringToComBoxSelectedItemConverter"/>
+
+            <Style x:Key="MenuItemWhiteShade" TargetType="{x:Type MenuItem}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type MenuItem}">
+                            <Grid SnapsToDevicePixels="true">
+                                <DockPanel>
+                                    <ContentPresenter x:Name="Icon"
+                                                      ContentSource="Icon"
+                                                      Margin="4 0 6 0" 
+                                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                      VerticalAlignment="Center"/>
+                                    <Path x:Name="GlyphPanel"
+                                          Fill="White"
+                                          FlowDirection="LeftToRight"
+                                          Margin="0" 
+                                          Visibility="Collapsed" 
+                                          VerticalAlignment="Center"/>
+                                    <ContentPresenter x:Name="content"
+                                                      ContentSource="Header"
+                                                      Margin="{TemplateBinding Padding}" 
+                                                      RecognizesAccessKey="True"
+                                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                </DockPanel>
+                                <Popup x:Name="PART_Popup" 
+                                       AllowsTransparency="True" 
+                                       Focusable="False" 
+                                       HorizontalOffset="1" 
+                                       IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}" 
+                                       PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}" 
+                                       Placement="Bottom" 
+                                       VerticalOffset="-1">
+                                    <Border BorderThickness="0.5"
+                                            BorderBrush="Black"
+                                            Background="White">
+                                        <ScrollViewer x:Name="SubMenuScrollViewer" 
+                                                      CanContentScroll="True"
+                                                      Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
+                                            <Grid RenderOptions.ClearTypeHint="Enabled">
+                                                <ItemsPresenter x:Name="ItemsPresenter" 
+                                                                KeyboardNavigation.DirectionalNavigation="Cycle"
+                                                                Grid.IsSharedSizeScope="True"
+                                                                Margin="2" 
+                                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                                KeyboardNavigation.TabNavigation="Cycle"/>
+                                            </Grid>
+                                        </ScrollViewer>
+                                    </Border>
+                                </Popup>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="TextBlock.Foreground" Value="#7FB446" TargetName="content"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <BitmapImage x:Key="AboutBoxImageSource" UriSource="/BankManager;component/Resources/b_icon.png"/>
+
+            <system:Double x:Key="PageHeight">850</system:Double>
+
+            <system:Double x:Key="PageWidth">1200</system:Double>
+
+            <SolidColorBrush x:Key="PageBackground" Color="White"/>
+
+            <Style x:Key="PageLabelStyle" TargetType="{x:Type TextBlock}">
+                <Setter Property="Margin" Value="3 0 0 10"/>
+                <Setter Property="FontWeight" Value="Black"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="TextAlignment" Value="Right"/>
+            </Style>
+
+            <Style x:Key="PageTextBoxStyle" TargetType="{x:Type TextBox}">
+                <Setter Property="Width" Value="300"/>
+                <Setter Property="Margin" Value="80 0 0 10"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+            </Style>
+
+            <Style x:Key="PageButtonStyle" TargetType="{x:Type Button}">
+                <Setter Property="Width" Value="70"/>
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="Margin" Value="5"/>
+            </Style>
+
+            <Style x:Key="PageBtnGetDetailsStyle" TargetType="{x:Type Button}">
+                <Setter Property="Content" Value="Get Details"/>
+                <Setter Property="Margin" Value="15 -13 0 0"/>
+                <Setter Property="Width" Value="80"/>
+                <Setter Property="Height" Value="22"/>
+            </Style>
+
+            <Style x:Key="PageTitleStyle" TargetType="{x:Type TextBlock}">
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="Foreground" Value="BlueViolet"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="FontWeight" Value="Black"/>
+                <Setter Property="Margin" Value="0 10 0 0"/>
+            </Style>
+
+            <Style x:Key="PageBottomStackPanelStyle" TargetType="{x:Type StackPanel}">
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="Orientation" Value="Horizontal"/>
+                <Setter Property="Margin" Value="0 -40 0 0"/>
+            </Style>
+
+            <Style x:Key="PageComboBoxStyle" TargetType="{x:Type ComboBox}">
+                <Setter Property="Width" Value="300"/>
+                <Setter Property="Margin" Value="80 0 0 10"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
